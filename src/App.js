@@ -117,64 +117,62 @@ const App = () => {
         </div>
 
         {/* Preview Panel */}
-        <div className="overflow-auto bg-slate-200 p-4 rounded-xl flex justify-center">
-          <div 
-            ref={certificateRef}
-            className="bg-white shadow-2xl relative"
-            style={{ width: '210mm', minHeight: '297mm', padding: '0' }}
-          >
-            {/* Letterhead Background */}
-            <img src="/letterhead.png" className="absolute top-0 left-0 w-full z-0" alt="Letterhead" />
-            
-            {/* Content overlay - adjusted to fit the "white space" of your image */}
-            <div className="relative z-10 p-[25mm] pt-[70mm] text-slate-800 font-serif">
-              <h1 className="text-center text-3xl font-bold border-b-2 border-slate-800 pb-2 mb-8">MEDICAL CERTIFICATE</h1>
-              
-              <div className="space-y-6 text-lg leading-relaxed">
-                <p>To Whom It May Concern,</p>
-                
-                <p>
-                  This is to certify that <strong>{formData.name || "__________"}</strong>, 
-                  aged <strong>{formData.age || "___"}</strong> years, <strong>{formData.sex || "___"}</strong>, 
-                  was under my medical supervision for the purpose of <strong>{formData.purpose || "medical consultation"}</strong>.
-                </p>
+<div className="overflow-auto bg-slate-200 p-4 rounded-xl flex justify-center border-l border-slate-300">
+  <div 
+    ref={certificateRef}
+    className="certificate-container"
+  >
+    {/* High-quality background image covering exactly the A4 area */}
+    <img 
+      src="/letterhead.png" 
+      className="absolute inset-0 w-full h-full object-fill z-0" 
+      alt="Letterhead" 
+    />
+    
+    {/* Content Area - Tuned for your specific letterhead proportions */}
+    <div className="relative z-10 px-[25mm] pt-[55mm] pb-[60mm] h-full flex flex-col text-slate-900 font-serif">
+      <h1 className="text-center text-3xl font-bold underline mb-10 tracking-wide">
+        MEDICAL CERTIFICATE
+      </h1>
+      
+      <div className="flex-grow space-y-8 text-[13pt] leading-[1.8]">
+        <p className="font-semibold">To Whom It May Concern,</p>
+        
+        <p>
+          This is to certify that <strong>{formData.name || "__________"}</strong>, 
+          aged <strong>{formData.age || "___"}</strong> years, <strong>{formData.sex || "___"}</strong>, 
+          was under my medical supervision for the purpose of <strong>{formData.purpose || "medical consultation"}</strong>.
+        </p>
 
-                <div className="grid grid-cols-1 gap-2 bg-slate-50 p-4 rounded">
-                  <p><strong>Presenting Symptoms:</strong> {formData.symptoms || "N/A"}</p>
-                  <p><strong>Clinical Diagnosis:</strong> {formData.diagnosis || "N/A"}</p>
-                </div>
-
-                <p>
-                  Based on the clinical examination, the patient is/was advised rest and medical leave from 
-                  <strong> {formData.startDate || "___"} </strong> to <strong> {formData.endDate || "___"}</strong>.
-                </p>
-
-                <div className="italic min-h-[100px] border-t pt-4">
-                  {formData.body}
-                </div>
-
-                <div className="pt-20 flex justify-between items-end">
-                  <div className="text-sm">
-                    <p>Date: {new Date().toLocaleDateString()}</p>
-                    <p>Place: Dwarka, Delhi</p>
-                  </div>
-                  <div className="text-center border-t border-slate-400 pt-2 w-48">
-                    <p className="font-bold">Authorized Signatory</p>
-                    <p className="text-xs">Easy My Care (EMC)</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="space-y-4 py-2 border-l-4 border-slate-200 pl-6 italic">
+          <p><strong>Presenting Symptoms:</strong> {formData.symptoms || "N/A"}</p>
+          <p><strong>Clinical Diagnosis:</strong> {formData.diagnosis || "N/A"}</p>
         </div>
 
-      </div>
-      <style>{`
-        .input-style { @apply w-full border border-slate-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none; }
-        .btn-primary { @apply flex items-center gap-2 text-white px-4 py-2 rounded-md hover:opacity-90 transition-all font-medium; }
-      `}</style>
-    </div>
-  );
-};
+        <p>
+          Based on the clinical examination, the patient is/was advised rest and medical leave from 
+          <span className="border-b border-slate-400 mx-1 px-2 font-bold">{formData.startDate || "___"}</span> 
+          to 
+          <span className="border-b border-slate-400 mx-1 px-2 font-bold">{formData.endDate || "___"}</span>.
+        </p>
 
-export default App;
+        <div className="whitespace-pre-wrap mt-6 min-h-[80px]">
+          {formData.body}
+        </div>
+      </div>
+
+      {/* Signature area placed above the footer info */}
+      <div className="mt-auto flex justify-between items-end">
+        <div className="text-sm opacity-70">
+          <p>Date: {new Date().toLocaleDateString()}</p>
+          <p>Place: Dwarka, Delhi</p>
+        </div>
+        <div className="text-center w-56">
+          <div className="h-16"></div> {/* Space for manual stamp/sign */}
+          <p className="border-t border-slate-800 pt-1 font-bold">Authorized Signatory</p>
+          <p className="text-xs font-sans tracking-tighter">Easy My Care (EMC) Private Limited</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
