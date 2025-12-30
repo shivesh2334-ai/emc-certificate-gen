@@ -1,89 +1,101 @@
-/* 1. Tailwind Core Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 2. Custom UI Components (Using @apply for cleaner App.js code) */
 @layer components {
   .input-style {
-    @apply w-full border border-slate-300 rounded-md p-2.5 text-sm transition-all
+    @apply w-full border border-slate-300 rounded-lg p-2.5 text-sm transition-all
            focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none
-           bg-white shadow-sm;
+           bg-white shadow-sm hover:border-blue-300;
   }
 
   .btn-primary {
-    @apply flex items-center justify-center gap-2 text-white px-5 py-2.5 rounded-lg 
-           font-semibold transition-all duration-200 active:scale-95 shadow-md;
-  }
-
-  .section-card {
-    @apply bg-white p-6 rounded-xl shadow-sm border border-slate-200;
+    @apply flex items-center justify-center gap-2 text-white px-4 py-2.5 rounded-lg 
+           font-bold transition-all duration-200 active:scale-95 shadow-md text-sm;
   }
 }
 
-/* Precise A4 Container */
-.certificate-container {
-  background-color: white;
+/* PREVIEW WRAPPER SETUP */
+.preview-section {
+  @apply bg-slate-300 p-6 rounded-2xl flex justify-center items-start overflow-hidden;
+  min-height: 800px;
+}
+
+.preview-container {
+  /* This creates the scaling effect for desktop screens */
+  transform: scale(0.65);
+  transform-origin: top center;
+}
+
+/* THE A4 DOCUMENT */
+.certificate-page {
   width: 210mm;
-  height: 297mm; /* Fixed height is crucial for A4 */
-  min-height: 297mm;
+  height: 297mm;
+  background-color: white;
   position: relative;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-  overflow: hidden;
-  margin: 0 auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden; /* Prevents text from bleeding out */
 }
 
-/* Ensure the background image occupies 100% height and width */
-.certificate-container img {
+/* LETTERHEAD BACKGROUND */
+.letterhead-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: fill; /* This forces the letterhead to fill the A4 page exactly */
+  object-fit: fill; /* Forces the image to hit all 4 corners */
+  z-index: 0;
 }
 
-/* Typography Improvements */
-.font-serif {
-  font-family: 'Playfair Display', 'Times New Roman', serif;
+/* SAFE AREA CONTENT OVERLAY */
+.certificate-content-layer {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  /* ADJUST THESE PADDINGS TO ALIGN WITH YOUR LOGO/FOOTER */
+  padding-left: 25mm;
+  padding-right: 25mm;
+  padding-top: 55mm;    /* Keeps text below your Logo */
+  padding-bottom: 60mm; /* Keeps text above your Address/QR code */
+  
+  font-family: 'Playfair Display', serif;
+  color: #0f172a;
 }
 
-/* Scaled Preview for different screen sizes */
-@media (max-width: 1200px) {
-  .certificate-container {
-    transform: scale(0.5);
-    transform-origin: top center;
+.certificate-title {
+  @apply text-center text-3xl font-bold underline mb-10 tracking-widest;
+}
+
+.certificate-body {
+  @apply text-[14pt] leading-[1.8] flex-grow;
+}
+
+.field-value {
+  @apply font-bold border-b border-slate-400 px-1;
+}
+
+.diagnosis-box {
+  @apply bg-slate-50 p-6 rounded-xl border-l-4 border-slate-300 my-6;
+}
+
+.certificate-footer {
+  @apply flex justify-between items-end mt-auto;
+}
+
+.signature-line {
+  @apply text-center w-64;
+}
+
+/* RESPONSIVE SCALING FOR PHONES */
+@media (max-width: 768px) {
+  .preview-container {
+    transform: scale(0.35);
+  }
+  .preview-section {
+    min-height: 500px;
   }
 }
-
-@media (min-width: 1201px) {
-  .certificate-container {
-    transform: scale(0.75);
-    transform-origin: top center;
-  }
-}
-
-/* 7. Loading Spinner Animation */
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.animate-spin-slow {
-  animation: spin 3s linear infinite;
-}
-
-/* 8. Scrollbar Styling for a premium feel */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-  }
