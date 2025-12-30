@@ -1,0 +1,98 @@
+/* 1. Tailwind Core Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 2. Custom UI Components (Using @apply for cleaner App.js code) */
+@layer components {
+  .input-style {
+    @apply w-full border border-slate-300 rounded-md p-2.5 text-sm transition-all
+           focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none
+           bg-white shadow-sm;
+  }
+
+  .btn-primary {
+    @apply flex items-center justify-center gap-2 text-white px-5 py-2.5 rounded-lg 
+           font-semibold transition-all duration-200 active:scale-95 shadow-md;
+  }
+
+  .section-card {
+    @apply bg-white p-6 rounded-xl shadow-sm border border-slate-200;
+  }
+}
+
+/* 3. Medical Certificate Preview (A4 Proportions) */
+/* This ensures the preview looks exactly like a real piece of paper */
+.certificate-container {
+  background-color: white;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Keeps the letterhead image contained */
+}
+
+/* 4. Letterhead Background Image Positioning */
+.letterhead-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none; /* Allows selecting text on top of image */
+}
+
+/* 5. Typography for the Formal Document */
+.certificate-content {
+  position: relative;
+  z-index: 10;
+  font-family: 'Playfair Display', serif; /* Classic formal font */
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+/* 6. Responsive Scaling for Mobile Preview */
+/* On small screens, we scale the giant A4 preview down so it fits */
+@media (max-width: 1024px) {
+  .preview-wrapper {
+    transform: scale(0.45);
+    transform-origin: top center;
+    height: 500px; /* Prevents huge empty space below scaled content */
+  }
+}
+
+@media (min-width: 1025px) {
+  .preview-wrapper {
+    transform: scale(0.65);
+    transform-origin: top center;
+  }
+}
+
+/* 7. Loading Spinner Animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin 3s linear infinite;
+}
+
+/* 8. Scrollbar Styling for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+  }
